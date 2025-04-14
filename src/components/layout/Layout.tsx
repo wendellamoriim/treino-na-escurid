@@ -2,15 +2,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  BarChart3, 
-  Users, 
-  ClipboardList, 
-  FileText, 
-  LogOut, 
-  Menu, 
-  X, 
-  Settings, 
-  User 
+  Dumbbell,  // Dashboard/Training
+  Users,     // Clients
+  ListChecks, // Assessments
+  FileText,  // Reports
+  Settings,  // Settings
+  LogOut,    // Logout
+  Menu,      // Mobile Menu Toggle
+  X,         // Close Menu
+  UserRound  // Profile
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -37,7 +37,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const menuItems = [
     { 
       name: 'Dashboard', 
-      icon: <BarChart3 className="h-5 w-5" />, 
+      icon: <Dumbbell className="h-5 w-5" />, 
       path: '/dashboard',
       onClick: () => navigate('/dashboard')
     },
@@ -49,7 +49,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     },
     { 
       name: 'Avaliações', 
-      icon: <ClipboardList className="h-5 w-5" />, 
+      icon: <ListChecks className="h-5 w-5" />, 
       path: '/assessments',
       onClick: () => navigate('/assessments')
     },
@@ -61,7 +61,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     },
     { 
       name: 'Perfil', 
-      icon: <User className="h-5 w-5" />, 
+      icon: <UserRound className="h-5 w-5" />, 
       path: '/profile',
       onClick: () => navigate('/profile')
     },
@@ -97,7 +97,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
         <div className="flex flex-col h-full p-4">
           <div className="flex items-center justify-center py-6 mb-4">
-            <h1 className="text-2xl font-bold text-gradient">TreinoGym</h1>
+            <h1 className="text-2xl font-bold text-gradient text-logo">FitTreiner PRO</h1>
           </div>
 
           {/* Menu items */}

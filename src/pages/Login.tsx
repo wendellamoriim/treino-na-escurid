@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ActivityIcon } from 'lucide-react';
+import { Dumbbell } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -35,9 +35,9 @@ const Login = () => {
         <Card className="card-gradient shadow-lg">
           <CardHeader className="space-y-1 text-center">
             <div className="flex justify-center mb-4">
-              <ActivityIcon className="h-12 w-12 text-primary" />
+              <Dumbbell className="h-12 w-12 text-primary" />
             </div>
-            <CardTitle className="text-2xl font-bold">TreinoGym</CardTitle>
+            <CardTitle className="text-2xl font-bold text-logo">FitTreiner PRO</CardTitle>
             <CardDescription>
               Portal do Personal Trainer
             </CardDescription>
