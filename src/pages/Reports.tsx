@@ -19,6 +19,22 @@ interface Report {
   };
 }
 
+// Typing the raw response to better understand the structure
+interface SupabaseReportResponse {
+  id: string;
+  assessment_id: string;
+  date: string;
+  status: string;
+  created_at: string;
+  assessments: {
+    clientid: string;
+    // The actual field holds an object, not an array
+    clients: {
+      name: string;
+    }
+  }
+}
+
 const Reports = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -49,20 +65,37 @@ const Reports = () => {
         throw error;
       }
       
+      console.log("Raw data from Supabase:", data);
+      
       // Transformar os dados para o formato esperado
-      const formattedData = data.map(report => ({
-        id: report.id,
-        assessment_id: report.assessment_id,
-        date: report.date,
-        status: report.status,
-        created_at: report.created_at,
-        client: {
-          name: report.assessments?.clients?.name || 
-                // Alternativa caso a estrutura seja diferente do esperado
-                (report.assessments && Array.isArray(report.assessments.clients) && 
-                report.assessments.clients.length > 0 ? report.assessments.clients[0].name : 'Cliente desconhecido')
+      const formattedData = data.map((report: any) => {
+        // Logging to understand the structure
+        console.log("Processing report:", report);
+        
+        let clientName = 'Cliente desconhecido';
+        
+        // Safely access client name handling different potential structures
+        if (report.assessments && report.assessments.clients) {
+          if (typeof report.assessments.clients === 'object' && report.assessments.clients.name) {
+            // Direct object with name property
+            clientName = report.assessments.clients.name;
+          } else if (Array.isArray(report.assessments.clients) && report.assessments.clients.length > 0) {
+            // Array of client objects
+            clientName = report.assessments.clients[0].name;
+          }
         }
-      }));
+        
+        return {
+          id: report.id,
+          assessment_id: report.assessment_id,
+          date: report.date,
+          status: report.status,
+          created_at: report.created_at,
+          client: {
+            name: clientName
+          }
+        };
+      });
       
       return formattedData as Report[];
     }
