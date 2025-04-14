@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { PlusCircle, Save, ChevronRight, ChevronLeft, ClipboardList, Check } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
@@ -67,7 +66,7 @@ const Assessments = () => {
       const { data, error } = await supabase
         .from('assessments')
         .select('*')
-        .eq('clientid', selectedClientId);
+        .eq('client_id', selectedClientId); // Alterado de clientid para client_id
       
       if (error) {
         throw error;
@@ -78,17 +77,17 @@ const Assessments = () => {
     enabled: !!selectedClientId
   });
 
-  // Mutação para criar nova avaliação
+  // Mutation para criar uma nova avaliação
   const createAssessmentMutation = useMutation({
     mutationFn: async (clientId: string) => {
       const { data, error } = await supabase
         .from('assessments')
         .insert([
           { 
-            clientid: clientId,
+            client_id: clientId, // Alterado de clientid para client_id
             date: new Date().toISOString(),
             type: 'geral',
-            status: 'em_andamento' 
+            status: 'em_andamento'
           }
         ])
         .select();
@@ -102,7 +101,7 @@ const Assessments = () => {
       setAssessmentCreated(true);
       setDialogOpen(false);
       
-      // Criar registro inicial de detalhes
+      // Criar detalhes iniciais da avaliação
       createAssessmentDetailsMutation.mutate({
         assessment_id: data.id,
         form_data: {
@@ -167,7 +166,7 @@ const Assessments = () => {
       console.error('Erro ao criar avaliação:', error);
       toast({
         title: "Erro",
-        description: "Não foi possível criar a avaliação",
+        description: "Não foi possível criar a avaliação. Por favor, tente novamente.",
         variant: "destructive"
       });
     }
@@ -894,6 +893,19 @@ const Assessments = () => {
         return <p>Etapa não encontrada</p>;
     }
   };
+
+  const handleCreateAssessment = () => {
+    if (!selectedClientId) {
+      toast({
+        title: "Erro",
+        description: "Selecione um cliente para continuar.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    createAssessmentMutation.mutate(selectedClientId);
+  };
   
   return (
     <Layout>
@@ -964,11 +976,10 @@ const Assessments = () => {
                 </div>
                 <DialogFooter>
                   <Button 
-                    onClick={handleCreateNewAssessment} 
-                    disabled={loading || !selectedClientId}
-                    className="bg-[#9b87f5] hover:bg-[#7E69AB]"
+                    onClick={() => handleCreateAssessment()}
+                    disabled={!selectedClientId || createAssessmentMutation.isPending}
                   >
-                    {loading ? "Criando..." : "Criar Avaliação"}
+                    {createAssessmentMutation.isPending ? "Criando..." : "Criar Avaliação"}
                   </Button>
                 </DialogFooter>
               </DialogContent>

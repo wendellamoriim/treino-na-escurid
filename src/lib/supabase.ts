@@ -2,7 +2,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://mqniouvhwnokwkptnipa.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xbmlvdXZod25va3drcHRuaXBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMzUzNzcsImV4cCI6MjA1OTgxMTM3N30.7Qn7vocOEhpNEKigNFaCUnNw5NYWmhMZx2PqObAqIEA';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xbmlvdXZod25va3drcHRuaXBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMzUzNzcsImV4cCI6MjA1OTgxMTM3N30.7Qn7vocOEhpNEKigNFaCUnNw5NYWmhMZx2PqObAqSUE';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -13,12 +13,11 @@ export type Client = {
   phone: string;
   cpf: string;
   created_at: string;
-  avatar_url?: string;
 };
 
 export type Assessment = {
   id: string;
-  clientid: string;
+  client_id: string; // Alterado de clientid para client_id
   date: string;
   type: string;
   status: string;
@@ -41,70 +40,58 @@ export type AssessmentDetails = {
 };
 
 export interface AssessmentFormData {
-  anamnesis: AnamnesisForm;
-  anthropometric: AnthropometricForm;
-  postural: PosturalForm;
-  flexibility: FlexibilityForm;
-  muscular: MuscularForm;
-  cardiovascular: CardiovascularForm;
-  completed: boolean;
-  current_step: number;
-}
-
-export interface AnamnesisForm {
-  health_issues: string;
-  medications: string;
-  surgeries: string;
-  allergies: string;
-  lifestyle: string;
-  objectives: string;
-  physical_activity_history: string;
-  completed: boolean;
-}
-
-export interface AnthropometricForm {
-  height: number;
-  weight: number;
-  bmi: number;
-  body_fat_percentage: number;
-  waist_circumference: number;
-  hip_circumference: number;
-  chest_circumference: number;
-  arm_circumference: number;
-  thigh_circumference: number;
-  calf_circumference: number;
-  completed: boolean;
-}
-
-export interface PosturalForm {
-  anterior_view: string;
-  posterior_view: string;
-  lateral_view: string;
-  observations: string;
-  completed: boolean;
-}
-
-export interface FlexibilityForm {
-  sit_and_reach: number;
-  shoulder_flexibility: number;
-  trunk_rotation: number;
-  observations: string;
-  completed: boolean;
-}
-
-export interface MuscularForm {
-  push_ups: number;
-  pull_ups: number;
-  abdominal_crunches: number;
-  squat_test: number;
-  observations: string;
-  completed: boolean;
-}
-
-export interface CardiovascularForm {
-  resting_heart_rate: number;
-  blood_pressure: string;
-  cardiovascular_test: string;
-  observations: string;
-  completed: boolean;
+  anamnesis: {
+    health_issues: string;
+    medications: string;
+    surgeries: string;
+    allergies: string;
+    lifestyle: string;
+    objectives: string;
+    physical_activity_history: string;
+    completed: boolean;
+  };
+  anthropometric: {
+    height: number;
+    weight: number;
+    bmi: number;
+    body_fat_percentage: number;
+    waist_circumference: number;
+    hip_circumference: number;
+    chest_circumference: number;
+    arm_circumference: number;
+    thigh_circumference: number;
+    calf_circumference: number;
+    completed: boolean;
+  };
+  postural: {
+    anterior_view: string;
+    posterior_view: string;
+    lateral_view: string;
+    observations: string;
+    completed: boolean;
+  };
+  flexibility: {
+    sit_and_reach: number;
+    shoulder_flexibility: number;
+    trunk_rotation: number;
+    observations: string;
+    completed: boolean;
+  };
+  muscular: {
+    push_ups: number;
+    pull_ups: number;
+    abdominal_crunches: number;
+    squat_test: number;
+    observations: string;
+    completed: boolean;
+  };
+  cardiovascular: {
+    resting_heart_rate: number;
+    blood_pressure: string;
+    cardiovascular_test: string;
+    observations: string;
+    completed: boolean;
+  };
+  completed?: boolean;
+  current_step?: number;
 }
