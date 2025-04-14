@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -44,7 +45,7 @@
   }
   
   body {
-    @apply font-manrope;  // Use Manrope as the default font
+    @apply font-manrope; /* Use Manrope as the default font */
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
   }
@@ -62,7 +63,7 @@
   }
 
   .text-logo {
-    @apply font-inter tracking-tight; // Keep Inter for logo and headings
+    @apply font-inter tracking-tight; /* Keep Inter for logo and headings */
   }
 }
 
@@ -80,3 +81,4 @@
     @apply bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent;
   }
 }
+
