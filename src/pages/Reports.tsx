@@ -57,7 +57,10 @@ const Reports = () => {
         status: report.status,
         created_at: report.created_at,
         client: {
-          name: report.assessments.clients.name
+          name: report.assessments?.clients?.name || 
+                // Alternativa caso a estrutura seja diferente do esperado
+                (report.assessments && Array.isArray(report.assessments.clients) && 
+                report.assessments.clients.length > 0 ? report.assessments.clients[0].name : 'Cliente desconhecido')
         }
       }));
       
